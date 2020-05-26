@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="800.0" prefWidth="1240.0" style="-fx-background-color: #cccdcd;" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.pages.CopyAddPage">
+    <children>
+        <AnchorPane layoutX="383.0" layoutY="163.0" prefHeight="270.0" prefWidth="520.0" style="-fx-background-color: White;" AnchorPane.leftAnchor="383.0" AnchorPane.topAnchor="265.0">
+            <children>
+                <AnchorPane prefHeight="50.0" prefWidth="520.0" style="-fx-background-color: #18749F;">
+                    <children>
+                        <Label layoutX="151.0" layoutY="7.0" text="Dodaj egzemplarz " textFill="WHITE">
+                            <font>
+                                <Font name="System Bold" size="25.0" />
+                            </font>
+                        </Label>
+                    </children></AnchorPane>
+                <Label layoutX="41.0" layoutY="87.0" text="Kod">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Label>
+                <TextField fx:id="code" layoutX="135.0" layoutY="83.0" prefHeight="25.0" prefWidth="333.0" style="-fx-background-color: white; -fx-border-color: #A2B5C6;" />
+                <Label layoutX="40.0" layoutY="126.0" text="Książka">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Label>
+                <Button layoutX="386.0" layoutY="213.0" mnemonicParsing="false" onAction="#acceptAdd" prefHeight="31.0" prefWidth="94.0" style="-fx-background-color: #30507F;" text="Zatwierdz" textFill="WHITE">
+                    <font>
+                        <Font name="Arial Bold" size="12.0" />
+                    </font>
+                </Button>
+                <Button layoutX="38.0" layoutY="213.0" mnemonicParsing="false" onAction="#cancel" prefHeight="31.0" prefWidth="94.0" style="-fx-background-color: #30507F;" text="Anuluj" textFill="WHITE">
+                    <font>
+                        <Font name="Arial Bold" size="12.0" />
+                    </font>
+                </Button>
+                <ComboBox fx:id="books" layoutX="135.0" layoutY="160.0" prefHeight="25.0" prefWidth="333.0" style="-fx-background-color: white; -fx-border-color: #A2B5C6;" />
+                <TextField fx:id="bookFilter" layoutX="135.0" layoutY="124.0" prefHeight="25.0" prefWidth="333.0" style="-fx-background-color: white; -fx-border-color: #A2B5C6;" />
+            </children>
+        </AnchorPane>
+    </children>
+</AnchorPane>

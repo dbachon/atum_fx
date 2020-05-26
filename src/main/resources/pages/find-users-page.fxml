@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+        <?import javafx.scene.control.Button?>
+        <?import javafx.scene.control.Label?>
+        <?import javafx.scene.control.ScrollPane?>
+        <?import javafx.scene.control.TextField?>
+        <?import javafx.scene.layout.AnchorPane?>
+        <?import javafx.scene.layout.VBox?>
+        <?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="800.0" prefWidth="1240.0" style="-fx-background-color: #cccdcd;" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.pages.FindUsersComponent">
+<children>
+   <ScrollPane cacheShape="false" centerShape="false" layoutX="46.0" layoutY="215.0" pannable="true" prefHeight="559.0" prefWidth="1150.0" style="-fx-background-color: #E4D8E3;">
+      <content>
+         <VBox fx:id="usersList" prefHeight="562.0" prefWidth="1135.0" />
+      </content>
+   </ScrollPane>
+   <Label layoutX="808.0" layoutY="82.0" text="Email" />
+   <TextField fx:id="email" layoutX="808.0" layoutY="108.0" prefHeight="25.0" prefWidth="191.0" />
+   <AnchorPane layoutX="46.0" layoutY="156.0" prefHeight="51.0" prefWidth="1150.0" style="-fx-background-color: #a0a0a0;">
+      <children>
+         <Label layoutX="36.0" layoutY="17.0" text="Imie" />
+         <Label layoutX="173.0" layoutY="17.0" text="Nazwisko" />
+         <Label layoutX="367.0" layoutY="17.0" text="Email" />
+         <Label layoutX="563.0" layoutY="17.0" text="Rola" />
+         <Label layoutX="757.0" layoutY="17.0" text="Status" />
+         <Label layoutX="978.0" layoutY="17.0" text="Ustawienia" />
+      </children>
+   </AnchorPane>
+   <Button layoutX="1023.0" layoutY="105.0" mnemonicParsing="false" onAction="#findUserByEmail" prefHeight="31.0" prefWidth="94.0" style="-fx-background-color: #30507F;" text="Wyszukaj" textFill="WHITE">
+      <font>
+         <Font name="System Bold" size="14.0" />
+      </font></Button>
+   <AnchorPane prefHeight="50.0" prefWidth="1241.0" style="-fx-background-color: #18749F;">
+      <children>
+         <Label layoutX="481.0" layoutY="-1.0" prefHeight="51.0" prefWidth="278.0" text="Wyszukaj użytkownika" textFill="WHITE">
+            <font>
+               <Font name="System Bold" size="25.0" />
+            </font>
+         </Label>
+      </children></AnchorPane>
+
+   <Label layoutX="57.0" layoutY="82.0" text="Imie" />
+   <TextField fx:id="firstName" layoutX="57.0" layoutY="108.0" prefHeight="25.0" prefWidth="131.0" />
+   <TextField fx:id="lastName" layoutX="191.0" layoutY="108.0" prefHeight="25.0" prefWidth="131.0" />
+   <Label layoutX="191.0" layoutY="82.0" text="Nazwisko" />
+   <Button layoutX="347.0" layoutY="105.0" mnemonicParsing="false" onAction="#findUsers" prefHeight="31.0" prefWidth="94.0" style="-fx-background-color: #30507F;" text="Wyszukaj" textFill="WHITE">
+      <font>
+         <Font name="System Bold" size="14.0" />
+      </font></Button>
+
+</children>
+</AnchorPane>

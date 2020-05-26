@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="64.0" prefWidth="1109.0" style="-fx-border-style: solid; -fx-border-width: 1; -fx-border-color: white; -fx-background-color: #c8c8c8;" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.components.AuthorComponent">
+    <children>
+        <Label fx:id="firstName" layoutX="35.0" layoutY="22.0" text="Imie" />
+        <Label fx:id="lastName" layoutX="232.0" layoutY="24.0" prefHeight="17.0" prefWidth="175.0" text="Nazwisko" />
+    </children>
+</AnchorPane>

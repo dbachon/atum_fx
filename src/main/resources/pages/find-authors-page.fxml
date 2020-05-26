@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="800.0" prefWidth="1240.0" style="-fx-background-color: #cccdcd;" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.pages.FindAuthorsPage">
+    <children>
+        <ScrollPane cacheShape="false" centerShape="false" layoutX="46.0" layoutY="215.0" pannable="true" prefHeight="559.0" prefWidth="1150.0" style="-fx-background-color: #E4D8E3;">
+            <content>
+                <VBox fx:id="authorsList" prefHeight="562.0" prefWidth="1135.0" />
+            </content>
+        </ScrollPane>
+        <AnchorPane layoutX="46.0" layoutY="156.0" prefHeight="51.0" prefWidth="1150.0" style="-fx-background-color: #a0a0a0;">
+            <children>
+                <Label layoutX="37.0" layoutY="17.0" text="Imie" />
+                <Label layoutX="232.0" layoutY="17.0" prefHeight="17.0" prefWidth="66.0" text="Nazwisko" />
+                <Label layoutX="517.0" layoutY="17.0" />
+                <Label layoutX="756.0" layoutY="17.0" />
+                <Label layoutX="978.0" layoutY="17.0" />
+            </children>
+        </AnchorPane>
+        <AnchorPane prefHeight="50.0" prefWidth="1241.0" style="-fx-background-color: #18749F;">
+            <children>
+                <Label layoutX="481.0" layoutY="-1.0" prefHeight="51.0" prefWidth="278.0" text="Wyszukaj autora" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="25.0" />
+                    </font>
+                </Label>
+            </children></AnchorPane>
+
+        <Label layoutX="46.0" layoutY="78.0" text="Imie i nazwisko" />
+        <TextField fx:id="authorFilter" layoutX="46.0" layoutY="108.0" prefHeight="25.0" prefWidth="267.0" />
+        <Button layoutX="347.0" layoutY="105.0" mnemonicParsing="false" onAction="#findAuthors" prefHeight="31.0" prefWidth="94.0" style="-fx-background-color: #30507F;" text="Wyszukaj" textFill="WHITE">
+            <font>
+                <Font name="System Bold" size="14.0" />
+            </font></Button>
+
+    </children>
+</AnchorPane>

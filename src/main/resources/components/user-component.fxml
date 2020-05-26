@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="64.0" prefWidth="1109.0" style="-fx-border-style: solid; -fx-border-width: 1; -fx-border-color: white; -fx-background-color: #c8c8c8;" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.components.UserComponent">
+   <children>
+      <Label fx:id="firstName" layoutX="35.0" layoutY="22.0" text="Label" />
+      <Label fx:id="lastName" layoutX="175.0" layoutY="22.0" prefHeight="17.0" prefWidth="34.0" text="Label" />
+      <Label fx:id="email" layoutX="367.0" layoutY="22.0" text="Label" />
+      <Label fx:id="role" layoutX="561.0" layoutY="21.0" text="Label" />
+      <Label fx:id="status" layoutX="761.0" layoutY="22.0" text="Label" />
+      <Button layoutX="979.0" layoutY="18.0" mnemonicParsing="false" onAction="#userUpdate" style="-fx-background-color: #656565; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );" text="Więcej" textFill="#fffbfb">
+         <font>
+            <Font name="Arial Bold" size="12.0" />
+         </font></Button>
+   </children>
+</AnchorPane>
