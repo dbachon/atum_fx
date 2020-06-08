@@ -12,6 +12,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import sample.components.BookComponent;
 import sample.dto.in.BookDto;
+import sample.utils.AlertsFactory;
 import sample.utils.BaseComponent;
 import sample.utils.Component;
 import sample.utils.MenuItem;
@@ -24,7 +25,7 @@ import java.util.stream.Collectors;
 
 @MenuItem(name = "Wyszukaj książkę")
 @Component(resource = "/pages/find-book-page.fxml")
-public class FindBooksComponent extends BaseComponent {
+public class FindBooksPage extends BaseComponent {
 
     @FXML
     private TextField title;
@@ -36,36 +37,38 @@ public class FindBooksComponent extends BaseComponent {
     @Override
     public void init() {
         super.init();
-        bookService.getAllBooks(null).enqueue(new Callback<List<BookDto>>() {
+        finfBookBy(null);
+    }
+
+
+    @FXML
+    private void findBooks() {
+        finfBookBy(title.getText());
+
+    }
+
+
+    private void finfBookBy(String title) {
+        bookService.getAllBooks(title).enqueue(new Callback<List<BookDto>>() {
             @Override
             public void onResponse(Call<List<BookDto>> call, Response<List<BookDto>> response) {
 
-                Platform.runLater(() -> booksList.getChildren().setAll(response.body().stream().map(it -> createBook(it)).filter(Objects::nonNull).collect(Collectors.toList())));
+                Platform.runLater(() -> {
+                    if (response.isSuccessful()) {
+                        if (response.body() != null) {
+                            booksList.getChildren().setAll(response.body().stream().map(it -> createBook(it)).filter(Objects::nonNull).collect(Collectors.toList()));
+                        }
+                    } else {
+                        AlertsFactory.responseStatusError(response.errorBody());
+                    }
+                });
             }
 
             @Override
             public void onFailure(Call<List<BookDto>> call, Throwable throwable) {
-
+                AlertsFactory.apiCallError(throwable);
             }
         });
-    }
-
-
-        @FXML
-        private void findBooks() {
-
-            bookService.getAllBooks(title.getText()).enqueue(new Callback<List<BookDto>>() {
-                @Override
-                public void onResponse(Call<List<BookDto>> call, Response<List<BookDto>> response) {
-                    Platform.runLater(() -> booksList.getChildren().setAll(response.body().stream().map(it -> createBook(it)).filter(Objects::nonNull).collect(Collectors.toList())));
-
-                }
-
-                @Override
-                public void onFailure(Call<List<BookDto>> call, Throwable throwable) {
-
-                }
-            });
 
     }
 
@@ -77,7 +80,7 @@ public class FindBooksComponent extends BaseComponent {
             Pane pane = loader.load();
             BaseComponent controller = loader.getController();
             controller.setRouter(router);
-            controller.setProps(new BookComponent.Props(bookDto.getTitle(),bookDto.getAuthors(),bookDto.getPublisher(),bookDto.getGenre()));
+            controller.setProps(new BookComponent.Props(bookDto.getId(), bookDto.getTitle(), bookDto.getAuthors(), bookDto.getPublisher(), bookDto.getGenre()));
             controller.init();
             return pane;
         } catch (IOException e) {

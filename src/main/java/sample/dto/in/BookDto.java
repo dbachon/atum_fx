@@ -57,4 +57,13 @@ public class BookDto {
     public void setGenre(Genre genre) {
         this.genre = genre;
     }
+
+    public BookDto(Long id, String title, List<AuthorBookDto> authors) {
+        this.id = id;
+        this.title = title;
+        this.authors = authors;
+    }
+
+    public BookDto() {
+    }
 }

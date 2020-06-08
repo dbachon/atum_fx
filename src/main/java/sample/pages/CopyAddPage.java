@@ -1,5 +1,6 @@
 package sample.pages;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
@@ -10,6 +11,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import sample.dto.in.BookDto;
 import sample.dto.out.CopyAddRequest;
+import sample.utils.AlertsFactory;
 import sample.utils.BaseComponent;
 import sample.utils.Component;
 import sample.utils.MenuItem;
@@ -18,7 +20,7 @@ import java.util.List;
 
 
 @MenuItem(name = "Dodaj egzeplarz")
-@Component(resource = "/pages/add-copy-component.fxml")
+@Component(resource = "/pages/add-copy-page.fxml")
 public class CopyAddPage extends BaseComponent {
 
     @FXML
@@ -32,42 +34,33 @@ public class CopyAddPage extends BaseComponent {
     @Override
     public void init() {
 
-        bookFilter.textProperty().addListener((observable, oldValue, newValue) -> {
-            booksFilter();
-        });
+        bookFilter.textProperty().addListener((observable, oldValue, newValue) ->
+                booksFilter(bookFilter.getText()));
 
-        bookService.getAllBooks(null).enqueue(new Callback<List<BookDto>>() {
-            @Override
-            public void onResponse(Call<List<BookDto>> call, Response<List<BookDto>> response) {
-                FilteredList<BookDto> filteredList = new FilteredList<>(FXCollections.observableArrayList(response.body()));
-                books.setItems(filteredList);
-            }
-
-            @Override
-            public void onFailure(Call<List<BookDto>> call, Throwable throwable) {
-
-            }
-
-        });
+        booksFilter(null);
 
     }
 
 
-    public void booksFilter() {
-        bookService.getAllBooks(bookFilter.getText()).enqueue(new Callback<List<BookDto>>() {
+    private void booksFilter(String title) {
+        bookService.getAllBooks(title).enqueue(new Callback<List<BookDto>>() {
             @Override
             public void onResponse(Call<List<BookDto>> call, Response<List<BookDto>> response) {
-                FilteredList<BookDto> filteredList = new FilteredList<BookDto>(FXCollections.observableArrayList(response.body()));
-                books.setItems(filteredList);
+                if (response.isSuccessful()) {
+
+                    FilteredList<BookDto> filteredList = new FilteredList<>(FXCollections.observableArrayList(response.body()));
+                    Platform.runLater(() -> books.setItems(filteredList));
+                } else {
+                    AlertsFactory.responseStatusError(response.errorBody());
+                }
             }
 
             @Override
             public void onFailure(Call<List<BookDto>> call, Throwable throwable) {
-
+                AlertsFactory.apiCallError(throwable);
             }
 
         });
-
 
     }
 
@@ -75,24 +68,26 @@ public class CopyAddPage extends BaseComponent {
     @FXML
     public void acceptAdd() {
 
-
-
-            copyService.addCopy(new CopyAddRequest(code.getText(),books.getValue().getId())).enqueue(new Callback<Void>() {
+        copyService.addCopy(new CopyAddRequest(code.getText(), books.getValue().getId())).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
-
+                if (response.isSuccessful()) {
+                    AlertsFactory.success("Egzemplarz został dodany");
+                } else {
+                    AlertsFactory.responseStatusError(response.errorBody());
+                }
             }
 
             @Override
             public void onFailure(Call<Void> call, Throwable throwable) {
-
+                AlertsFactory.apiCallError(throwable);
             }
         });
 
     }
 
 
-    public void cancel(){
-        router.accept(CopyAddPage.class,null);
+    public void cancel() {
+        router.accept(CopyAddPage.class, null);
     }
 }

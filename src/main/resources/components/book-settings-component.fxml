@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="800.0" prefWidth="1240.0"
+            style="-fx-background-color: #cccdcd;" xmlns="http://javafx.com/javafx/8.0.172-ea"
+            fx:controller="sample.components.BookSettingsComponent">
+    <children>
+        <AnchorPane layoutX="360.0" layoutY="175.0" prefHeight="450.0" prefWidth="520.0"
+                    style="-fx-background-color: White;" AnchorPane.leftAnchor="360.0" AnchorPane.topAnchor="175.0">
+            <children>
+                <AnchorPane prefHeight="50.0" prefWidth="520.0" style="-fx-background-color: #18749F;">
+                    <children>
+                        <Label layoutX="176.0" layoutY="7.0" text="Edycja książki" textFill="WHITE">
+                            <font>
+                                <Font name="System Bold" size="25.0"/>
+                            </font>
+                        </Label>
+                    </children>
+                </AnchorPane>
+                <Label layoutX="38.0" layoutY="86.0" text="Tytuł">
+                    <font>
+                        <Font size="14.0"/>
+                    </font>
+                </Label>
+                <TextField fx:id="title" layoutX="135.0" layoutY="83.0" prefHeight="25.0" prefWidth="333.0"
+                           style="-fx-background-color: white; -fx-border-color: #A2B5C6;"/>
+                <Label layoutX="40.0" layoutY="126.0" text="Autorzy">
+                    <font>
+                        <Font size="14.0"/>
+                    </font>
+                </Label>
+                <Label layoutX="40.0" layoutY="304.0" text="Wydawnictwo">
+                    <font>
+                        <Font size="14.0"/>
+                    </font>
+                </Label>
+                <Label layoutX="40.0" layoutY="345.0" text="Gatunek">
+                    <font>
+                        <Font size="14.0"/>
+                    </font>
+                </Label>
+                <Button layoutX="385.0" layoutY="392.0" mnemonicParsing="false" onAction="#acceptAdd" prefHeight="31.0"
+                        prefWidth="94.0" style="-fx-background-color: #30507F;" text="Zatwierdz" textFill="WHITE">
+                    <font>
+                        <Font name="Arial Bold" size="12.0"/>
+                    </font>
+                </Button>
+                <Button layoutX="41.0" layoutY="395.0" mnemonicParsing="false" onAction="#cancel" prefHeight="31.0"
+                        prefWidth="94.0" style="-fx-background-color: #30507F;" text="Anuluj" textFill="WHITE">
+                    <font>
+                        <Font name="Arial Bold" size="12.0"/>
+                    </font>
+                </Button>
+                <ChoiceBox fx:id="genre" layoutX="135.0" layoutY="342.0" prefHeight="27.0" prefWidth="333.0"
+                           style="-fx-background-color: White; -fx-border-color: #A2B5C6;"/>
+                <ComboBox fx:id="authors" layoutX="135.0" layoutY="160.0" onAction="#choiceAuthor" prefHeight="25.0"
+                          prefWidth="333.0" style="-fx-background-color: white; -fx-border-color: #A2B5C6;"/>
+                <ComboBox fx:id="publisher" layoutX="135.0" layoutY="300.0" prefHeight="25.0" prefWidth="333.0"
+                          style="-fx-background-color: white; -fx-border-color: #A2B5C6;"/>
+                <TextField fx:id="authorFilter" layoutX="135.0" layoutY="124.0" prefHeight="25.0" prefWidth="333.0"
+                           style="-fx-background-color: white; -fx-border-color: #A2B5C6;"/>
+                <ListView fx:id="authorsList" layoutX="135.0" layoutY="197.0" onMouseClicked="#deleteAuthor"
+                          prefHeight="94.0" prefWidth="333.0"
+                          style="-fx-background-color: white; -fx-border-color: #A2B5C6;"/>
+            </children>
+        </AnchorPane>
+    </children>
+</AnchorPane>

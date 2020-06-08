@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="800.0" prefWidth="1240.0"
+            style="-fx-background-color: #cccdcd;" xmlns="http://javafx.com/javafx/8.0.172-ea"
+            fx:controller="sample.pages.FindCopyPage">
+    <children>
+        <ScrollPane cacheShape="false" centerShape="false" layoutX="46.0" layoutY="215.0" pannable="true"
+                    prefHeight="542.0" prefWidth="1150.0" style="-fx-background-color: #E4D8E3;">
+            <content>
+                <VBox fx:id="copiesList" prefHeight="543.0" prefWidth="1135.0"/>
+            </content>
+        </ScrollPane>
+        <AnchorPane layoutX="46.0" layoutY="156.0" prefHeight="51.0" prefWidth="1150.0"
+                    style="-fx-background-color: #a0a0a0;">
+            <children>
+                <Label layoutX="37.0" layoutY="17.0" text="Kod"/>
+                <Label layoutX="232.0" layoutY="17.0" prefHeight="17.0" prefWidth="66.0" text="Tytuł"/>
+                <Label layoutX="517.0" layoutY="17.0" text="Autorzy"/>
+                <Label layoutX="756.0" layoutY="17.0" text="Dostępność"/>
+                <Label layoutX="978.0" layoutY="17.0" text="Wiecej"/>
+            </children>
+        </AnchorPane>
+        <AnchorPane prefHeight="50.0" prefWidth="1241.0" style="-fx-background-color: #18749F;">
+            <children>
+                <Label layoutX="481.0" layoutY="-1.0" prefHeight="51.0" prefWidth="278.0" text="Wyszukaj egzemplarz"
+                       textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="25.0"/>
+                    </font>
+                </Label>
+            </children>
+        </AnchorPane>
+
+        <Label layoutX="57.0" layoutY="82.0" text="Tytuł"/>
+        <TextField fx:id="title" layoutX="57.0" layoutY="108.0" prefHeight="25.0" prefWidth="267.0"/>
+        <Button layoutX="347.0" layoutY="105.0" mnemonicParsing="false" onAction="#findCopies" prefHeight="31.0"
+                prefWidth="94.0" style="-fx-background-color: #30507F;" text="Wyszukaj" textFill="WHITE">
+            <font>
+                <Font name="System Bold" size="14.0"/>
+            </font>
+        </Button>
+        <Label layoutX="767.0" layoutY="82.0" text="Kod"/>
+        <TextField fx:id="code" layoutX="767.0" layoutY="108.0" prefHeight="25.0" prefWidth="267.0"/>
+        <Button layoutX="1073.0" layoutY="105.0" mnemonicParsing="false" onAction="#findCopiesCode" prefHeight="31.0"
+                prefWidth="94.0" style="-fx-background-color: #30507F;" text="Wyszukaj" textFill="WHITE">
+            <font>
+                <Font name="System Bold" size="14.0"/>
+            </font>
+        </Button>
+
+    </children>
+</AnchorPane>

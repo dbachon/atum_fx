@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
-
 <AnchorPane prefHeight="64.0" prefWidth="1109.0" style="-fx-border-style: solid; -fx-border-width: 1; -fx-border-color: white; -fx-background-color: #c8c8c8;" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.components.PublisherComponent">
     <children>
         <Label fx:id="name" layoutX="35.0" layoutY="22.0" text="Nazwa" />
         <Label fx:id="telephone" layoutX="232.0" layoutY="24.0" prefHeight="17.0" prefWidth="175.0" text="Telefon" />
         <Label fx:id="email" layoutX="518.0" layoutY="24.0" text="Email" />
-
+        <Button fx:id="moreButton" layoutX="979.0" layoutY="18.0" mnemonicParsing="false" onAction="#moreSettings"
+                style="-fx-background-color: #656565; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );"
+                text="Więcej" textFill="#fffbfb"/>
     </children>
 </AnchorPane>

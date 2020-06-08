@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-
 <AnchorPane prefHeight="800.0" prefWidth="1240.0" style="-fx-background-color: #cccdcd;" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.pages.FindAuthorsPage">
     <children>
         <ScrollPane cacheShape="false" centerShape="false" layoutX="46.0" layoutY="215.0" pannable="true" prefHeight="559.0" prefWidth="1150.0" style="-fx-background-color: #E4D8E3;">
@@ -21,7 +17,7 @@
                 <Label layoutX="232.0" layoutY="17.0" prefHeight="17.0" prefWidth="66.0" text="Nazwisko" />
                 <Label layoutX="517.0" layoutY="17.0" />
                 <Label layoutX="756.0" layoutY="17.0" />
-                <Label layoutX="978.0" layoutY="17.0" />
+                <Label layoutX="978.0" layoutY="17.0" text="Wiecej"/>
             </children>
         </AnchorPane>
         <AnchorPane prefHeight="50.0" prefWidth="1241.0" style="-fx-background-color: #18749F;">

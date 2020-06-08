@@ -10,16 +10,9 @@ import sample.utils.Component;
 @Component(resource = "/components/publisher-component.fxml")
 public class PublisherComponent extends BaseComponent {
 
-    public static class Props extends BaseProps {
-        private String name;
-        private String telephone;
-        private String email;
-
-        public Props(String name, String telephone, String email) {
-            this.name = name;
-            this.telephone = telephone;
-            this.email = email;
-        }
+    @FXML
+    private void moreSettings() {
+        router.accept(PublisherSettingsComponent.class, new PublisherSettingsComponent.Props(((Props) props).id, ((Props) props).name, ((Props) props).telephone, ((Props) props).email));
     }
 
 
@@ -41,6 +34,20 @@ public class PublisherComponent extends BaseComponent {
         }
         if (((Props) props).email != null) {
             this.email.setText(((Props) props).email);
+        }
+    }
+
+    public static class Props extends BaseProps {
+        private Long id;
+        private String name;
+        private String telephone;
+        private String email;
+
+        public Props(Long id, String name, String telephone, String email) {
+            this.id = id;
+            this.name = name;
+            this.telephone = telephone;
+            this.email = email;
         }
     }
 }

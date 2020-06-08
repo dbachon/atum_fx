@@ -13,9 +13,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import sample.components.AuthorComponent;
-import sample.components.BookComponent;
 import sample.dto.in.AuthorDto;
-import sample.dto.in.BookDto;
+import sample.utils.AlertsFactory;
 import sample.utils.BaseComponent;
 import sample.utils.Component;
 import sample.utils.MenuItem;
@@ -45,13 +44,20 @@ public class FindAuthorsPage extends BaseComponent {
         authorService.getAuthors(null,null).enqueue(new Callback<List<AuthorDto>>() {
             @Override
             public void onResponse(Call<List<AuthorDto>> call, Response<List<AuthorDto>> response) {
-                FilteredList<AuthorDto> filteredList = new FilteredList<AuthorDto>(FXCollections.observableArrayList(response.body()));
-                Platform.runLater(() -> authorsList.getChildren().setAll(response.body().stream().map(it -> createAuthor(it)).filter(Objects::nonNull).collect(Collectors.toList())));
+                if (response.isSuccessful()) {
+                    FilteredList<AuthorDto> filteredList = new FilteredList<>(FXCollections.observableArrayList(response.body()));
+                    Platform.runLater(() -> {
+                        if (response.body() != null) {
+                            authorsList.getChildren().setAll(response.body().stream().map(it -> createAuthor(it)).filter(Objects::nonNull).collect(Collectors.toList()));
+                        }
+                    });
+                } else {
+                    AlertsFactory.responseStatusError(response.errorBody());
+                }
             }
-
             @Override
             public void onFailure(Call<List<AuthorDto>> call, Throwable throwable) {
-
+                AlertsFactory.apiCallError(throwable);
             }
         });
 
@@ -63,18 +69,22 @@ public class FindAuthorsPage extends BaseComponent {
         authorService.getAuthors(authorFilter.getText(),"").enqueue(new Callback<List<AuthorDto>>() {
             @Override
             public void onResponse(Call<List<AuthorDto>> call, Response<List<AuthorDto>> response) {
-                Platform.runLater(() -> authorsList.getChildren().setAll(response.body().stream().map(it -> createAuthor(it)).filter(Objects::nonNull).collect(Collectors.toList())));
-
+                if (response.isSuccessful()) {
+                    Platform.runLater(() -> {
+                        if (response.body() != null) {
+                            authorsList.getChildren().setAll(response.body().stream().map(it -> createAuthor(it)).filter(Objects::nonNull).collect(Collectors.toList()));
+                        }
+                    });
+                } else {
+                    AlertsFactory.responseStatusError(response.errorBody());
+                }
             }
 
             @Override
             public void onFailure(Call<List<AuthorDto>> call, Throwable throwable) {
-
+                AlertsFactory.apiCallError(throwable);
             }
-
         });
-
-
     }
 
 
@@ -85,7 +95,7 @@ public class FindAuthorsPage extends BaseComponent {
             Pane pane = loader.load();
             BaseComponent controller = loader.getController();
             controller.setRouter(router);
-            controller.setProps(new AuthorComponent.Props(authorDto.getFirstName(),authorDto.getLastName()));
+            controller.setProps(new AuthorComponent.Props(authorDto.getId(), authorDto.getFirstName(), authorDto.getLastName()));
             controller.init();
             return pane;
         } catch (IOException e) {

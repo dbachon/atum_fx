@@ -11,14 +11,9 @@ import sample.utils.Component;
 @Component(resource = "/components/author-component.fxml")
 public class AuthorComponent extends BaseComponent {
 
-    public static class Props extends BaseProps {
-        private String firstName;
-        private String lastName;
-
-        public Props(String firstName, String lastName) {
-            this.firstName = firstName;
-            this.lastName = lastName;
-        }
+    @FXML
+    private void moreSettings() {
+        router.accept(AuthorSettingsComponent.class, new AuthorSettingsComponent.Props(((Props) props).id, ((Props) props).firstName, ((Props) props).lastName));
     }
 
     @FXML
@@ -36,5 +31,19 @@ public class AuthorComponent extends BaseComponent {
         if (((Props) props).lastName != null) {
             this.lastName.setText(((Props) props).lastName);
         }
+    }
+
+    public static class Props extends BaseProps {
+        private Long id;
+        private String firstName;
+        private String lastName;
+
+        public Props(Long id, String firstName, String lastName) {
+            this.id = id;
+            this.firstName = firstName;
+            this.lastName = lastName;
+        }
+
+
     }
 }

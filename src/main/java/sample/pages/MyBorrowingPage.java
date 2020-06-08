@@ -13,13 +13,12 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import sample.AppState;
-
 import sample.components.ReturnedBorrowingComponent;
 import sample.dto.in.BorrowingDto;
+import sample.utils.AlertsFactory;
 import sample.utils.BaseComponent;
 import sample.utils.Component;
 import sample.utils.MenuItem;
-
 import sample.utils.enums.Status;
 
 import java.io.IOException;
@@ -51,13 +50,18 @@ public class MyBorrowingPage extends BaseComponent {
             public void onResponse(Call<List<BorrowingDto>> call, Response<List<BorrowingDto>> response) {
 
                 if(response.isSuccessful()){
-                    Platform.runLater(() -> borrowingList.getChildren().setAll(response.body().stream().map(it -> createBorrowing(it)).filter(Objects::nonNull).collect(Collectors.toList())));
-
+                    Platform.runLater(() -> {
+                        if (response.body() != null) {
+                            borrowingList.getChildren().setAll(response.body().stream().map(it -> createBorrowing(it)).filter(Objects::nonNull).collect(Collectors.toList()));
+                        }
+                    });
+                } else {
+                    AlertsFactory.responseStatusError(response.errorBody());
                 }
             }
             @Override
             public void onFailure(Call<List<BorrowingDto>> call, Throwable throwable) {
-
+                AlertsFactory.apiCallError(throwable);
             }
         });
 
@@ -69,7 +73,11 @@ public class MyBorrowingPage extends BaseComponent {
         borrowingService.getMyBorrowings(AppState.getInstance().getToken(),status.getValue()).enqueue(new Callback<List<BorrowingDto>>() {
             @Override
             public void onResponse(Call<List<BorrowingDto>> call, Response<List<BorrowingDto>> response) {
-                Platform.runLater(() -> borrowingList.getChildren().setAll(response.body().stream().map(it -> createBorrowing(it)).filter(Objects::nonNull).collect(Collectors.toList())));
+                Platform.runLater(() -> {
+                    if (response.body() != null) {
+                        borrowingList.getChildren().setAll(response.body().stream().map(it -> createBorrowing(it)).filter(Objects::nonNull).collect(Collectors.toList()));
+                    }
+                });
             }
             @Override
             public void onFailure(Call<List<BorrowingDto>> call, Throwable throwable) {

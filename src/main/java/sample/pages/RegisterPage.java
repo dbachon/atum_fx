@@ -11,6 +11,7 @@ import retrofit2.Response;
 import sample.AppState;
 import sample.dto.in.AuthResponse;
 import sample.dto.in.RegisterRequest;
+import sample.utils.AlertsFactory;
 import sample.utils.BaseComponent;
 import sample.utils.Component;
 import sample.utils.MenuItem;
@@ -45,18 +46,20 @@ public class RegisterPage extends BaseComponent {
             public void onResponse(Call<AuthResponse> call, Response<AuthResponse> response) {
                 if(response.isSuccessful()){
                     AppState.getInstance().setCredential(response.body());
+                    router.accept(MyAccountPage.class, null);
                 } else {
 
                     Platform.runLater(()->{
                         password.clear();
                         registerFalied.setText("Niepoprawne dane");
                     });
+                    AlertsFactory.responseStatusError(response.errorBody());
                 }
             }
 
             @Override
             public void onFailure(Call<AuthResponse> call, Throwable throwable) {
-
+                AlertsFactory.apiCallError(throwable);
             }
         });
 

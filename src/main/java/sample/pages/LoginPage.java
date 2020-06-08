@@ -11,6 +11,7 @@ import retrofit2.Response;
 import sample.AppState;
 import sample.dto.in.AuthResponse;
 import sample.dto.in.LoginRequest;
+import sample.utils.AlertsFactory;
 import sample.utils.BaseComponent;
 import sample.utils.Component;
 import sample.utils.MenuItem;
@@ -48,17 +49,17 @@ public class LoginPage extends BaseComponent {
                     loginFailed.setText("");
                     router.accept(MyAccountPage.class,null);
                 } else {
-
                     Platform.runLater(()->{
                         password.clear();
                         loginFailed.setText("Błędny login lub hasło");
+                        AlertsFactory.responseStatusError(response.errorBody());
                     });
                 }
             }
 
             @Override
             public void onFailure(Call<AuthResponse> call, Throwable throwable) {
-
+                AlertsFactory.apiCallError(throwable);
             }
         });
 

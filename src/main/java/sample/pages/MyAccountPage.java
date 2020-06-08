@@ -8,13 +8,13 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import sample.AppState;
 import sample.dto.in.UserDto;
-import sample.pages.LoginPage;
+import sample.utils.AlertsFactory;
 import sample.utils.BaseComponent;
 import sample.utils.Component;
 import sample.utils.MenuItem;
 
 
-@Component(resource = "/pages/my-account.fxml")
+@Component(resource = "/pages/my-account-page.fxml")
 @MenuItem(name = "Moje Konto")
 public class MyAccountPage extends BaseComponent {
 
@@ -38,18 +38,22 @@ public class MyAccountPage extends BaseComponent {
             public void onResponse(Call<UserDto> call, Response<UserDto> response) {
                 Platform.runLater(() -> {
                     if (response.isSuccessful()) {
-                        firstName.setText(" " + response.body().getFirstName());
-                        lastName.setText(" " + response.body().getLastName());
-                        email.setText(" " + response.body().getEmail());
-                        role.setText(" " + response.body().getRole().name());
-                        status.setText(" " + response.body().getUserStatus().name());
+                        if (response.body() != null) {
+                            firstName.setText(" " + response.body().getFirstName());
+                            lastName.setText(" " + response.body().getLastName());
+                            email.setText(" " + response.body().getEmail());
+                            role.setText(" " + response.body().getRole().name());
+                            status.setText(" " + response.body().getUserStatus().name());
+                        }
+                    } else {
+                        AlertsFactory.responseStatusError(response.errorBody());
                     }
                 });
             }
 
             @Override
             public void onFailure(Call<UserDto> call, Throwable throwable) {
-
+                AlertsFactory.apiCallError(throwable);
             }
         });
     }

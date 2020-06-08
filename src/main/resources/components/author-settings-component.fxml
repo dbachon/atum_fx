@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+            minWidth="-Infinity" prefHeight="800.0" prefWidth="1240.0" style="-fx-background-color: #cccdcd;"
+            xmlns="http://javafx.com/javafx/8.0.172-ea" fx:controller="sample.components.AuthorSettingsComponent">
+    <children>
+        <AnchorPane layoutX="314.0" layoutY="270.0" prefHeight="260.0" prefWidth="445.0"
+                    style="-fx-background-color: White;" AnchorPane.bottomAnchor="270.0" AnchorPane.leftAnchor="402.0"
+                    AnchorPane.topAnchor="270.0">
+            <children>
+                <AnchorPane prefHeight="49.0" prefWidth="445.0" style="-fx-background-color: #18749F;">
+                    <children>
+                        <Label layoutX="156.0" layoutY="9.0" text="Edycja autora" textFill="WHITE">
+                            <font>
+                                <Font name="System Bold" size="21.0"/>
+                            </font>
+                        </Label>
+                    </children>
+                </AnchorPane>
+                <Label layoutX="41.0" layoutY="98.0" text="Imie">
+                    <font>
+                        <Font size="14.0"/>
+                    </font>
+                </Label>
+                <Label layoutX="41.0" layoutY="141.0" text="Nazwisko">
+                    <font>
+                        <Font size="14.0"/>
+                    </font>
+                </Label>
+                <TextField fx:id="firstName" layoutX="111.0" layoutY="96.0" prefHeight="25.0" prefWidth="277.0"/>
+                <TextField fx:id="lastName" layoutX="111.0" layoutY="139.0" prefHeight="25.0" prefWidth="277.0"/>
+                <Button layoutX="313.0" layoutY="207.0" mnemonicParsing="false" onAction="#acceptAdd" prefHeight="31.0"
+                        prefWidth="94.0" style="-fx-background-color: #30507F;" text="Zatwierdz" textFill="WHITE">
+                    <font>
+                        <Font name="Arial Bold" size="12.0"/>
+                    </font>
+                </Button>
+                <Button layoutX="41.0" layoutY="207.0" mnemonicParsing="false" onAction="#cancel" prefHeight="31.0"
+                        prefWidth="94.0" style="-fx-background-color: #30507F;" text="Anuluj" textFill="WHITE">
+                    <font>
+                        <Font name="Arial Bold" size="12.0"/>
+                    </font>
+                </Button>
+            </children>
+        </AnchorPane>
+    </children>
+</AnchorPane>

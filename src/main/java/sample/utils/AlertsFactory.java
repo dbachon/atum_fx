@@ -13,7 +13,7 @@ public class AlertsFactory {
             Alert alert = new Alert(Alert.AlertType.ERROR);
 
             alert.setTitle("Błąd Krytyczny");
-            alert.setHeaderText("Polączenie z API nie powiodło się.");
+            alert.setHeaderText("Brak połączenia z API");
             alert.setContentText(throwable.getMessage());
 
             alert.showAndWait();
@@ -29,46 +29,34 @@ public class AlertsFactory {
                 AlertsFactory.unknownError(e.getMessage());
             }
         }
-        String finalMessage = message;
+        String messageReceived = message;
         Platform.runLater(() -> {
+
             Alert alert = new Alert(Alert.AlertType.WARNING);
 
             alert.setTitle("Błąd");
             alert.setHeaderText("Coś poszło nie tak.");
-            alert.setContentText(finalMessage);
-
+            alert.setContentText(messageReceived);
             alert.showAndWait();
         });
     }
 
-    public static void unknownError(String message) {
+    private static void unknownError(String message) {
         Platform.runLater(() -> {
             Alert alert = new Alert(Alert.AlertType.ERROR);
 
             alert.setTitle("Błąd Krytyczny");
-            alert.setHeaderText("Nieznany błąd.");
+            alert.setHeaderText("Nieznany błąd...");
             alert.setContentText(message);
-
             alert.showAndWait();
         });
     }
 
-    public static void inputError(String message) {
-        Platform.runLater(() -> {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-
-            alert.setTitle("Błąd");
-            alert.setHeaderText("Wprowadzono niepoprawne dane.");
-            alert.setContentText(message);
-
-            alert.showAndWait();
-        });
-    }
 
     public static void success(String message) {
         Platform.runLater(() -> {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
 
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Sukces");
             alert.setHeaderText("Operacja zakończona powodzeniem.");
             alert.setContentText(message);

@@ -12,14 +12,12 @@ import javafx.scene.layout.VBox;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import sample.components.BookComponent;
 import sample.components.BorrowingComponent;
-
 import sample.dto.in.BorrowingDto;
+import sample.utils.AlertsFactory;
 import sample.utils.BaseComponent;
 import sample.utils.Component;
 import sample.utils.MenuItem;
-
 import sample.utils.enums.Status;
 
 import java.io.IOException;
@@ -30,7 +28,7 @@ import java.util.stream.Collectors;
 
 @MenuItem(name = "Wyszukaj wypożyczenia")
 @Component(resource = "/pages/find-borrowings-page.fxml")
-public class FindBorrowingComponent extends BaseComponent {
+public class FindBorrowingPage extends BaseComponent {
 
     @FXML
     private TextField email;
@@ -46,31 +44,33 @@ public class FindBorrowingComponent extends BaseComponent {
     public void init() {
         status.setItems(FXCollections.observableArrayList(Status.values()));
         status.setValue(Status.ALL);
-        borrowingService.getAllBorrowings().enqueue(new Callback<List<BorrowingDto>>() {
-            @Override
-            public void onResponse(Call<List<BorrowingDto>> call, Response<List<BorrowingDto>> response) {
 
-                Platform.runLater(() -> borrowingList.getChildren().setAll(response.body().stream().map(it -> createBorrowing(it)).filter(Objects::nonNull).collect(Collectors.toList())));
-            }
-            @Override
-            public void onFailure(Call<List<BorrowingDto>> call, Throwable throwable) {
-
-            }
-        });
-
+        findBorrowingBy(null, null);
     }
-
 
     @FXML
     private void findBorrowings() {
-        borrowingService.getBorrowings(email.getText(), status.getValue()).enqueue(new Callback<List<BorrowingDto>>() {
+        findBorrowingBy(email.getText(), status.getValue());
+    }
+
+    private void findBorrowingBy(String email, Status status) {
+        borrowingService.getBorrowings(email, status).enqueue(new Callback<List<BorrowingDto>>() {
             @Override
             public void onResponse(Call<List<BorrowingDto>> call, Response<List<BorrowingDto>> response) {
-                Platform.runLater(() -> borrowingList.getChildren().setAll(response.body().stream().map(it -> createBorrowing(it)).filter(Objects::nonNull).collect(Collectors.toList())));
+                if (response.isSuccessful()) {
+                    Platform.runLater(() -> {
+                        if (response.body() != null) {
+                            borrowingList.getChildren().setAll(response.body().stream().map(it -> createBorrowing(it)).filter(Objects::nonNull).collect(Collectors.toList()));
+                        }
+                    });
+                } else {
+                    AlertsFactory.responseStatusError(response.errorBody());
+                }
             }
+
             @Override
             public void onFailure(Call<List<BorrowingDto>> call, Throwable throwable) {
-
+                AlertsFactory.apiCallError(throwable);
             }
         });
 
@@ -85,7 +85,7 @@ public class FindBorrowingComponent extends BaseComponent {
             Pane pane = loader.load();
             BaseComponent controller = loader.getController();
             controller.setRouter(router);
-            controller.setProps(new BorrowingComponent.Props(borrowingDto.getEmail(),borrowingDto.getId(),borrowingDto.getDate(),borrowingDto.getReturnedDate(),borrowingDto.getStatus(),borrowingDto.getCopies()));
+            controller.setProps(new BorrowingComponent.Props(borrowingDto.getEmail(), borrowingDto.getId(), borrowingDto.getDate(), borrowingDto.getReturnedDate(), borrowingDto.getStatus(), borrowingDto.getCopies()));
             controller.init();
             return pane;
         } catch (IOException e) {

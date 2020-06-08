@@ -15,10 +15,7 @@ import sample.components.CopyBorrowingComponent;
 import sample.components.CopyComponent;
 import sample.dto.in.CopyDto;
 import sample.dto.out.BorrowingAddRequest;
-import sample.utils.BaseComponent;
-import sample.utils.BorrowingCopy;
-import sample.utils.Component;
-import sample.utils.MenuItem;
+import sample.utils.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -49,25 +46,29 @@ public class BorrowingBooksPage extends BaseComponent {
         copyService.getCopy(null).enqueue(new Callback<List<CopyDto>>() {
             @Override
             public void onResponse(Call<List<CopyDto>> call, Response<List<CopyDto>> response) {
-                copyDtoList = response.body();
-                initCopyList();
+                if (response.isSuccessful()) {
+                    copyDtoList = response.body();
+                    initCopyList();
+                } else {
+                    AlertsFactory.responseStatusError(response.errorBody());
+                }
             }
 
             @Override
             public void onFailure(Call<List<CopyDto>> call, Throwable throwable) {
-
+                AlertsFactory.apiCallError(throwable);
             }
         });
 
         AppState.getInstance().isBorrowingAddProperty().addListener((observable, oldValue, newValue) -> Platform.runLater(() -> {
-            borrowingCopiesList.getChildren().setAll(AppState.getInstance().getBorrowingsAddCopies().stream().map(it -> createAddCopy(it)).filter(Objects::nonNull).collect(Collectors.toList()));
+            borrowingCopiesList.getChildren().setAll(AppState.getInstance().getBorrowingsAddCopies().stream().map(this::createAddCopy).filter(Objects::nonNull).collect(Collectors.toList()));
             initCopyList();
         }));
 
     }
 
     private void initCopyList(){
-        Platform.runLater(() -> copiesList.getChildren().setAll(copyDtoList.stream().map(it -> createCopy(it)).filter(Objects::nonNull).collect(Collectors.toList())));
+        Platform.runLater(() -> copiesList.getChildren().setAll(copyDtoList.stream().map(this::createCopy).filter(Objects::nonNull).collect(Collectors.toList())));
     }
 
     @FXML
@@ -91,12 +92,14 @@ public class BorrowingBooksPage extends BaseComponent {
     @FXML
     private void acceptBorrowing(){
         borrowingService.createBorrowing(AppState.getInstance().getToken(),
-                new BorrowingAddRequest( AppState.getInstance().getBorrowingsAddCopies().stream().map(e -> e.getCopyId()).collect(Collectors.toList()) )).
+                new BorrowingAddRequest(AppState.getInstance().getBorrowingsAddCopies().stream().map(BorrowingCopy::getCopyId).collect(Collectors.toList()))).
                 enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if(response.isSuccessful()){
                     router.accept(MyBorrowingPage.class,null);
+                } else {
+                    AlertsFactory.responseStatusError(response.errorBody());
                 }
             }
 

@@ -11,7 +11,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import sample.dto.in.CopyDto;
 import sample.dto.out.BorrowingAcceptRequest;
-import sample.pages.FindBorrowingComponent;
+import sample.pages.FindBorrowingPage;
 import sample.utils.BaseComponent;
 import sample.utils.BaseProps;
 import sample.utils.Component;
@@ -99,7 +99,7 @@ public class BorrowingSettingComponent extends BaseComponent {
         borrowingService.borrowingChangeSettings(borrowingAcceptRequest).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
-                router.accept(FindBorrowingComponent.class,null);
+                router.accept(FindBorrowingPage.class, null);
             }
 
             @Override
@@ -113,7 +113,7 @@ public class BorrowingSettingComponent extends BaseComponent {
 
     @FXML
     public void goBack(){
-        router.accept(FindBorrowingComponent.class,null);
+        router.accept(FindBorrowingPage.class, null);
     }
 
 }

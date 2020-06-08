@@ -73,19 +73,19 @@ public class App extends Application implements Initializable {
                 menuItemWrapper.getChildren().setAll(Collections.emptyList());
                 switch (AppState.getInstance().getRole()) {
                     case READER:
-                        Arrays.asList(MyAccountPage.class, FindBooksComponent.class, BorrowingBooksPage.class, MyBorrowingPage.class)
+                        Arrays.asList(MyAccountPage.class, FindBooksPage.class, BorrowingBooksPage.class, MyBorrowingPage.class)
                                 .forEach(this::addMenuButton);
                         break;
                     case LIBRARIAN:
-                        Arrays.asList(MyAccountPage.class, FindBooksComponent.class, BorrowingBooksPage.class, MyBorrowingPage.class,
-                                FindBorrowingComponent.class, FindPublishersPage.class, FindAuthorsPage.class, BookAddPage.class,
+                        Arrays.asList(MyAccountPage.class, FindBooksPage.class, BorrowingBooksPage.class, MyBorrowingPage.class,
+                                FindBorrowingPage.class, FindPublishersPage.class, FindCopyPage.class, FindAuthorsPage.class, BookAddPage.class,
                                 AuthorAddPage.class, PublisherAddPage.class, CopyAddPage.class
                         )
                                 .forEach(this::addMenuButton);
                         break;
                     case ADMIN:
-                        Arrays.asList(MyAccountPage.class, FindBooksComponent.class, BorrowingBooksPage.class, MyBorrowingPage.class,
-                                FindBorrowingComponent.class, FindPublishersPage.class, FindAuthorsPage.class, BookAddPage.class,
+                        Arrays.asList(MyAccountPage.class, FindBooksPage.class, BorrowingBooksPage.class, MyBorrowingPage.class,
+                                FindBorrowingPage.class, FindPublishersPage.class, FindCopyPage.class, FindAuthorsPage.class, BookAddPage.class,
                                 AuthorAddPage.class, PublisherAddPage.class, CopyAddPage.class, FindUsersComponent.class
                         )
                                 .forEach(this::addMenuButton);
@@ -116,19 +116,15 @@ public class App extends Application implements Initializable {
     @SuppressWarnings("unchecked")
     private void addMenuButton(Class<? extends BaseComponent> page) {
         MenuItem menuItem = page.getAnnotation(MenuItem.class);
-        if (menuItem == null) {
-            //  throw new Exception("Invalid page");
-        }
         Button button = new Button(menuItem.name());
         VBox.setVgrow(button, Priority.ALWAYS);
         button.setMaxWidth(Double.MAX_VALUE);
         button.setUserData(page);
-        button.setStyle("-fx-background-color: #464653; -fx-text-fill: #D2D6D7; -fx-arc-height: 100; -fx-font-size: 14; -fx-font-family: 'Droid Sans'");
-        button.setMinHeight(60);
+        button.setStyle("-fx-background-color: #464653; -fx-text-fill: #D2D6D7; -fx-arc-height: 100; -fx-font-size: 14; -fx-font-family: 'Droid Sans'; ");
+        button.setMinHeight(56);
         VBox.setMargin(button, new Insets(0, 0, 2, 0));
         button.setOnAction((ActionEvent event) ->
-                setView((Class<? extends BaseComponent>) ((Button) event.getSource()).getUserData(), null)
-        );
+                setView((Class<? extends BaseComponent>) ((Button) event.getSource()).getUserData(), null));
         menuItemWrapper.getChildren().add(button);
     }
 

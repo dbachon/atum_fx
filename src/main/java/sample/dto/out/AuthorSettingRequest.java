@@ -1,20 +1,14 @@
-package sample.dto.in;
+package sample.dto.out;
 
-public class AuthorDto {
+public class AuthorSettingRequest {
     private Long id;
     private String firstName;
     private String lastName;
 
-
-    public AuthorDto(AuthorBookDto authorBookDto) {
-        this.id = authorBookDto.getId();
-        this.firstName = authorBookDto.getFirstName();
-        this.lastName = authorBookDto.getLastName();
-    }
-
-    @Override
-    public String toString() {
-        return firstName + " " + lastName;
+    public AuthorSettingRequest(Long id, String firstName, String lastName) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
 
     public String getFirstName() {

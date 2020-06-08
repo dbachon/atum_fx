@@ -4,6 +4,7 @@ import retrofit2.Call;
 import retrofit2.http.*;
 import sample.dto.in.PublisherBookDto;
 import sample.dto.out.PublisherAddRequest;
+import sample.dto.out.PublisherSettingsRequest;
 
 import java.util.List;
 
@@ -14,4 +15,8 @@ public interface PublisherService {
 
     @GET("/publishers")
     Call<List<PublisherBookDto>> getPublishers(@Query("name") String name);
+
+    @PATCH("/publishers")
+    Call<Void> changePublisherSettings(@Body PublisherSettingsRequest publisherSettingsRequest);
+
 }

@@ -10,11 +10,9 @@ import javafx.scene.layout.VBox;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import sample.components.BookComponent;
 import sample.components.UserComponent;
-import sample.dto.in.BookDto;
 import sample.dto.in.UserDto;
-import sample.services.UserService;
+import sample.utils.AlertsFactory;
 import sample.utils.BaseComponent;
 import sample.utils.Component;
 import sample.utils.MenuItem;
@@ -38,64 +36,47 @@ public class FindUsersComponent extends BaseComponent {
     private VBox usersList;
 
 
-
     @Override
     public void init() {
         super.init();
-        userService.getUsers(null, null,null).enqueue(new Callback<List<UserDto>>() {
-            @Override
-            public void onResponse(Call<List<UserDto>> call, Response<List<UserDto>> response) {
-                Platform.runLater(() -> usersList.getChildren().setAll(response.body().stream().map(it -> createUser(it)).filter(Objects::nonNull).collect(Collectors.toList())));
-            }
-
-            @Override
-            public void onFailure(Call<List<UserDto>> call, Throwable throwable) {
-
-            }
-        });
+        findUsersBy(null, null, null);
     }
-
 
     @FXML
     private void findUsers() {
-
-        userService.getUsers(firstName.getText(), lastName.getText(),null).enqueue(new Callback<List<UserDto>>() {
-            @Override
-            public void onResponse(Call<List<UserDto>> call, Response<List<UserDto>> response) {
-                Platform.runLater(() -> usersList.getChildren().setAll(response.body().stream().map(it -> createUser(it)).filter(Objects::nonNull).collect(Collectors.toList())));
-
-            }
-
-            @Override
-            public void onFailure(Call<List<UserDto>> call, Throwable throwable) {
-
-            }
-        });
-
+        findUsersBy(firstName.getText(), lastName.getText(), null);
     }
 
     @FXML
     private void findUserByEmail() {
+        findUsersBy(null, null, email.getText());
+    }
 
-        userService.getUsers(null, null,email.getText()).enqueue(new Callback<List<UserDto>>() {
+    private void findUsersBy(String firstName, String lastName, String email) {
+        userService.getUsers(firstName, lastName, email).enqueue(new Callback<List<UserDto>>() {
             @Override
             public void onResponse(Call<List<UserDto>> call, Response<List<UserDto>> response) {
-                Platform.runLater(() -> usersList.getChildren().setAll(response.body().stream().map(it -> createUser(it)).filter(Objects::nonNull).collect(Collectors.toList())));
-
+                if (response.isSuccessful()) {
+                    Platform.runLater(() -> {
+                        if (response.body() != null) {
+                            usersList.getChildren().setAll(response.body().stream().map(it -> createUser(it)).filter(Objects::nonNull).collect(Collectors.toList()));
+                        }
+                    });
+                } else {
+                    AlertsFactory.responseStatusError(response.errorBody());
+                }
             }
 
             @Override
             public void onFailure(Call<List<UserDto>> call, Throwable throwable) {
-
+                AlertsFactory.apiCallError(throwable);
             }
         });
-
     }
 
 
     private Pane createUser(UserDto userDto) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(UserComponent.class.getAnnotation(Component.class).resource()));
-
         try {
             Pane pane = loader.load();
             BaseComponent controller = loader.getController();

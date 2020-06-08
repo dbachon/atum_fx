@@ -1,6 +1,5 @@
-package sample.pages;
+package sample.components;
 
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
@@ -11,13 +10,15 @@ import javafx.scene.control.TextField;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import sample.dto.in.AuthorBookDto;
 import sample.dto.in.AuthorDto;
 import sample.dto.in.PublisherBookDto;
-import sample.dto.out.BookAddRequest;
+import sample.dto.out.BookSettingsRequest;
+import sample.pages.FindBooksPage;
 import sample.utils.AlertsFactory;
 import sample.utils.BaseComponent;
+import sample.utils.BaseProps;
 import sample.utils.Component;
-import sample.utils.MenuItem;
 import sample.utils.enums.Genre;
 
 import java.util.ArrayList;
@@ -25,9 +26,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 
-@MenuItem(name = "Dodaj książkę")
-@Component(resource = "/pages/add-book-page.fxml")
-public class BookAddPage extends BaseComponent {
+@Component(resource = "/components/book-settings-component.fxml")
+public class BookSettingsComponent extends BaseComponent {
 
     @FXML
     private TextField title;
@@ -46,9 +46,12 @@ public class BookAddPage extends BaseComponent {
 
     @Override
     public void init() {
+
+
         genre.setItems(FXCollections.observableArrayList(Genre.values()));
-        authorFilter.textProperty().addListener((observable, oldValue, newValue) -> authorsFilter(authorFilter.getText()));
-        authorsFilter("");
+        authorFilter.textProperty().addListener((observable, oldValue, newValue) -> authorsFilter());
+
+        findAuthorsBy(null, null);
 
 
         publisherService.getPublishers(null).enqueue(new Callback<List<PublisherBookDto>>() {
@@ -56,7 +59,7 @@ public class BookAddPage extends BaseComponent {
             public void onResponse(Call<List<PublisherBookDto>> call, Response<List<PublisherBookDto>> response) {
                 if (response.isSuccessful()) {
                     FilteredList<PublisherBookDto> filteredList = new FilteredList<>(FXCollections.observableArrayList(response.body()));
-                    Platform.runLater(() -> publisher.setItems(filteredList));
+                    publisher.setItems(filteredList);
                 } else {
                     AlertsFactory.responseStatusError(response.errorBody());
                 }
@@ -68,17 +71,25 @@ public class BookAddPage extends BaseComponent {
             }
         });
 
+        genre.setValue(((Props) props).genre);
+        authorsAddList = ((Props) props).authors.stream().map(AuthorDto::new).collect(Collectors.toList());
+        publisher.setValue(((Props) props).publisher);
+        title.setText(((Props) props).title);
+        authorsList.setItems(FXCollections.observableArrayList(authorsAddList));
 
     }
 
+    private void authorsFilter() {
+        findAuthorsBy(authorFilter.getText(), "");
+    }
 
-    private void authorsFilter(String names) {
-        authorService.getAuthors(names, "").enqueue(new Callback<List<AuthorDto>>() {
+    private void findAuthorsBy(String names, String secondName) {
+        authorService.getAuthors(names, secondName).enqueue(new Callback<List<AuthorDto>>() {
             @Override
             public void onResponse(Call<List<AuthorDto>> call, Response<List<AuthorDto>> response) {
                 if (response.isSuccessful()) {
                     FilteredList<AuthorDto> filteredList = new FilteredList<>(FXCollections.observableArrayList(response.body()));
-                    Platform.runLater(() -> authors.setItems(filteredList));
+                    authors.setItems(filteredList);
                 } else {
                     AlertsFactory.responseStatusError(response.errorBody());
                 }
@@ -88,12 +99,9 @@ public class BookAddPage extends BaseComponent {
             public void onFailure(Call<List<AuthorDto>> call, Throwable throwable) {
                 AlertsFactory.apiCallError(throwable);
             }
-
         });
 
-
     }
-
 
     @FXML
     public void choiceAuthor() {
@@ -104,17 +112,16 @@ public class BookAddPage extends BaseComponent {
 
     }
 
-
     @FXML
     public void acceptAdd() {
-        BookAddRequest bookAddRequest = new BookAddRequest(title.getText(), genre.getValue(), authorsList.getItems().stream().map(AuthorDto::getId).collect(Collectors.toList()), publisher.getValue().getId());
+        BookSettingsRequest bookSettingsRequest = new BookSettingsRequest(((Props) props).id, title.getText(), genre.getValue(), authorsList.getItems().stream().map(AuthorDto::getId).collect(Collectors.toList()), publisher.getValue().getId());
 
-        bookService.addBook(bookAddRequest).enqueue(new Callback<Void>() {
+        bookService.changeBookSettings(bookSettingsRequest).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 {
                     if (response.isSuccessful()) {
-                        AlertsFactory.success("Książka została dodana");
+                        AlertsFactory.success("Edycja książki się powiodła");
                     } else {
                         AlertsFactory.responseStatusError(response.errorBody());
                     }
@@ -129,7 +136,6 @@ public class BookAddPage extends BaseComponent {
 
     }
 
-
     @FXML
     void deleteAuthor() {
         authorsList.getItems().remove(authorsList.getSelectionModel().getSelectedItem());
@@ -138,6 +144,22 @@ public class BookAddPage extends BaseComponent {
 
     @FXML
     public void cancel() {
-        router.accept(BookAddPage.class, null);
+        router.accept(FindBooksPage.class, null);
+    }
+
+    public static class Props extends BaseProps {
+        private Long id;
+        private String title;
+        private List<AuthorBookDto> authors;
+        private PublisherBookDto publisher;
+        private Genre genre;
+
+        public Props(Long id, String title, List<AuthorBookDto> authors, PublisherBookDto publisher, Genre genre) {
+            this.id = id;
+            this.title = title;
+            this.authors = authors;
+            this.publisher = publisher;
+            this.genre = genre;
+        }
     }
 }
