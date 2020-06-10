@@ -86,7 +86,7 @@ public class App extends Application implements Initializable {
                     case ADMIN:
                         Arrays.asList(MyAccountPage.class, FindBooksPage.class, BorrowingBooksPage.class, MyBorrowingPage.class,
                                 FindBorrowingPage.class, FindPublishersPage.class, FindCopyPage.class, FindAuthorsPage.class, BookAddPage.class,
-                                AuthorAddPage.class, PublisherAddPage.class, CopyAddPage.class, FindUsersComponent.class
+                                AuthorAddPage.class, PublisherAddPage.class, CopyAddPage.class, FindUsersPage.class
                         )
                                 .forEach(this::addMenuButton);
                         break;

@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 
 @Component(resource = "/pages/find-users-page.fxml")
 @MenuItem(name = "Użytkownicy")
-public class FindUsersComponent extends BaseComponent {
+public class FindUsersPage extends BaseComponent {
     @FXML
     private TextField firstName;
     @FXML

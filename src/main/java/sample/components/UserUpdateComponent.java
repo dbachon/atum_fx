@@ -8,7 +8,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import sample.dto.out.UserChangeSettingsRequest;
-import sample.pages.FindUsersComponent;
+import sample.pages.FindUsersPage;
 import sample.utils.BaseComponent;
 import sample.utils.BaseProps;
 import sample.utils.Component;
@@ -16,7 +16,7 @@ import sample.utils.enums.Role;
 import sample.utils.enums.UserStatus;
 
 
-@Component(resource = "/components/user-updade-component.fxml")
+@Component(resource = "/components/user-update-component.fxml")
 public class UserUpdateComponent extends BaseComponent {
 
     @FXML
@@ -118,7 +118,7 @@ public class UserUpdateComponent extends BaseComponent {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 System.out.println("succes");
-                router.accept(FindUsersComponent.class,null);
+                router.accept(FindUsersPage.class, null);
             }
 
             @Override
@@ -126,12 +126,12 @@ public class UserUpdateComponent extends BaseComponent {
 
             }
         });
-    //    router.accept(FindUsersComponent.class,null);
+        //    router.accept(FindUsersPage.class,null);
     }
 
     @FXML
     public void goBack(){
-        router.accept(FindUsersComponent.class,null);
+        router.accept(FindUsersPage.class, null);
     }
 
 }
