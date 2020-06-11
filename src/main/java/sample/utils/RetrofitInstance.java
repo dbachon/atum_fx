@@ -4,10 +4,10 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializer;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 import java.time.LocalDateTime;
 import java.util.concurrent.TimeUnit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitInstance {
 
@@ -28,7 +28,7 @@ public class RetrofitInstance {
 
 
     private static Retrofit ourInstance = new  Retrofit.Builder()
-            .baseUrl("http://localhost/")
+            .baseUrl("http://localhost:8080/")
 
             .addConverterFactory(GsonConverterFactory.create(
                     new GsonBuilder()

@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1240.0" style="-fx-background-color: #cccdcd;" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.pages.RegisterPage">
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="800.0" maxWidth="1240.0" minHeight="800.0" minWidth="1240.0"
+            prefHeight="800.0" prefWidth="1240.0" style="-fx-background-color: #cccdcd;"
+            xmlns="http://javafx.com/javafx/8.0.172-ea" fx:controller="sample.pages.RegisterPage">
     <children>
         <AnchorPane layoutX="314.0" layoutY="270.0" prefHeight="270.0" prefWidth="445.0" style="-fx-background-color: White;" AnchorPane.leftAnchor="402.0" AnchorPane.topAnchor="265.0">
             <children>
